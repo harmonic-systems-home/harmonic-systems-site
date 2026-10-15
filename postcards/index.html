@@ -28,6 +28,11 @@ dt{color:var(--muted)} dd{margin:0}
 @media (max-width:560px){.portrait{float:none;margin:0 auto 16px}}
 @media print{.portrait{width:1.9in}}
 dd.scan{font-family:Menlo,monospace;font-size:.85em} figure a{display:block;cursor:zoom-in}
+nav.float{position:fixed;right:14px;bottom:14px;display:flex;gap:2px;z-index:1000;opacity:0;pointer-events:none;transition:opacity .2s}
+nav.float.on{opacity:1;pointer-events:auto}
+nav.float a{background:var(--accent);color:#fff;text-decoration:none;font-size:14px;padding:8px 12px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+nav.float a:first-child{border-radius:18px 0 0 18px} nav.float a:last-child{border-radius:0 18px 18px 0}
+@media print{nav.float{display:none}}
 .rel{font-size:.85em;color:#2c5f7a;font-style:italic}
 .unc,.ed{color:var(--muted);font-style:normal} .ed{font-size:.9em}
 nav.top{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 18px;font-size:16px} nav.top a,.index a,.leaflet-popup-content a{color:var(--accent)}
@@ -46,7 +51,8 @@ details.toc{margin:0 0 20px} details.toc summary{cursor:pointer;color:var(--acce
   .card{break-before:page;border:0;padding:0} figure img{box-shadow:none;max-height:3.1in;width:auto;max-width:100%}
   .sides{gap:10px} .text{gap:14px} @page{size:letter;margin:.5in}}
 </style></head><body>
-<header><h1>Postcards to Fred Wright, 1904–1918</h1><p class="sub">182 picture postcards from the Wright family of Forest Glen, Maryland</p>
+<nav class="float" aria-label="Jump"><a href="#top" title="Back to the top">↑ Top</a><a href="#people" title="People index">People</a><a href="#places" title="Places index">Places</a></nav>
+<header id="top"><h1>Postcards to Fred Wright, 1904–1918</h1><p class="sub">182 picture postcards from the Wright family of Forest Glen, Maryland</p>
 
 <p>These picture postcards were sent to <b>Frederick William Wright</b> (1894–1970), and saved by him,
 from his boyhood in Forest Glen, Montgomery County, Maryland, through his college years and the end of
@@ -1230,4 +1236,8 @@ if (window.L) {
   // open on North America, where nearly all the cards were mailed; zoom out for Europe and Egypt
   map.on("popupopen", () => document.querySelectorAll(".leaflet-popup-content a").forEach(a => a.onclick = () => map.closePopup()));
 }
+
+// the jump buttons appear once the reader has scrolled past the introduction
+const fl = document.querySelector("nav.float");
+addEventListener("scroll", () => fl.classList.toggle("on", scrollY > 900), {passive: true});
 </script></body></html>
